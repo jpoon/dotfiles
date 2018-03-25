@@ -1,4 +1,4 @@
-cd ~/Source/Vim
+cd ~/Source/
 
 # Zsh
 export ZSH=$HOME/.oh-my-zsh
