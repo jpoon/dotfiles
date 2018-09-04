@@ -49,3 +49,4 @@ export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/jason/Libr
 # completion
 [ -f '/usr/local/lib/azure-cli/az.completion' ] && source '/usr/local/lib/azure-cli/az.completion'
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
