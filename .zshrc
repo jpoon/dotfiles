@@ -1,4 +1,4 @@
-cd ~/Source/
+cd ~/Source
 
 # Zsh
 export ZSH=$HOME/.oh-my-zsh
@@ -35,18 +35,25 @@ POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='236'
 
 POWERLEVEL9K_COLOR_SCHEME='dark'
 POWERLEVEL9K_HIDE_BRANCH_ICON=true
+POWERLEVEL9K_MODE='nerdfont-complete'
 
 # Env
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/Source/go
 export EDITOR='vim'
-export NVM_DIR=/Users/jason/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH=$PATH:/usr/local/bin
 
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/jason/Library/Android/sdk/tools:/usr/local/share/dotnet:$GOROOT/bin:$GOPATH/bin
+#   Go
+export GOROOT="$(brew --prefix golang)/libexec"
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin
 
-# completion
-[ -f '/usr/local/lib/azure-cli/az.completion' ] && source '/usr/local/lib/azure-cli/az.completion'
+#   Nvm
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
 
+#   Java
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export M2_HOME=/usr/local/Cellar/maven/3.5.2/libexec
+export PATH=$PATH:$M2_HOME/bin
+
+# Shell Completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
