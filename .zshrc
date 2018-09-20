@@ -45,6 +45,9 @@ export PATH=$PATH:$M2_HOME/bin
 autoload -U +X compinit && compinit
 source <(kubectl completion zsh)
 
+# Aliases
+alias yubime='ssh-add -e /usr/local/lib/opensc-pkcs11.so 2> /dev/null; ssh-add -s /usr/local/lib/opensc-pkcs11.so'
+
 # Zsh
 plugins=(
   vi-mode 
