@@ -4,6 +4,7 @@
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install go nvm git bash-completion vim tmux kubectl
+brew cask install spotify
 
 # Fonts
 brew tap caskroom/fonts
