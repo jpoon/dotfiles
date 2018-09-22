@@ -1,0 +1,9 @@
+[user]
+    email = git@jasonpoon.ca
+	name = Jason Poon
+[credential]
+	helper = cache --timeout 3600
+[core]
+	autocrlf = false
+[pager]
+	branch = false
