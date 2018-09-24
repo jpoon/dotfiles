@@ -1,0 +1,1 @@
+ansible-playbook -i hosts -k playbook/update.yml 

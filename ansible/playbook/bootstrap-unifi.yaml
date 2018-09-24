@@ -1,0 +1,29 @@
+---
+- hosts: unifi-controller
+  become: yes
+  tasks:
+  - name: Add Unifi to Package Sources
+    command: echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee -a /etc/apt/sources.list.d/100-ubnt.list > /dev/null
+
+  - name: Install 'certificate manager'
+    apt: 
+      name: dirmngr
+
+  - name: Add Unifi APT Key
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: 06E85760C0A52C50      
+  
+  - name: Install 'unifi' and 'java'
+    apt: 
+      name: "{{ item }}"
+      update_cache: true
+    with_items:
+      - 'unifi'
+      - 'oracle-java8-jdk'
+
+  - name: Disable and Stop MongoDB
+    systemd:
+      name: mongodb
+      enabled: no
+      state: stopped
