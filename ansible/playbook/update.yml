@@ -1,17 +1,24 @@
 ---
-- hosts: all
+- name: Update packages
+  hosts: all
   become: yes
   tasks:
   - name: Update APT package cache
     apt: 
       update_cache: yes 
       cache_valid_time: 600
-
   - name: Upgrade APT packages
     apt: 
       upgrade=dist
-
   - name: Autoremove unused packages
     apt:
       autoremove: yes
-      purge: yes
+      autoclean: yes
+
+- name: Update pihole
+  hosts: pihole
+  become: yes
+  tasks:
+  - name: Update pihole
+    shell: pihole -up
+    

@@ -43,10 +43,10 @@
 ## db-[99:101]-node.example.com
 
 [pihole]
-pi.hole ansible_user=pi
+192.168.1.50 ansible_user=pi
 
 [hassio]
-home.local ansible_user=pi
+192.168.1.60 ansible_user=pi
 
 [unifi-controller]
-wifi.local ansible_user=pi
+192.168.1.70 ansible_user=pi
