@@ -50,3 +50,6 @@
 
 [unifi-controller]
 192.168.1.70 ansible_user=pi
+
+[plex]
+192.168.1.80 ansible_user=pi
