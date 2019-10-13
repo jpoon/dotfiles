@@ -6,16 +6,6 @@
     apt: 
       name: apt-transport-https
 
-  - name: Add dev2day to Package Sources
-    apt_repository:
-      repo: deb https://dev2day.de/pms/ jessie main
-      state: present
-
-  - name: Add dev2day APT Key
-    apt_key:
-      url: https://dev2day.de/pms/dev2day-pms.gpg.key
-      state: present  
-
   - name: Install 'plexmediaserver'
     apt: 
       default_release: jessie
