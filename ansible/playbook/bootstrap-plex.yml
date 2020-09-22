@@ -1,0 +1,13 @@
+---
+- hosts: plex
+  become: yes
+  tasks:
+  - name: Install 'transport-https'
+    apt: 
+      name: apt-transport-https
+
+  - name: Install 'plexmediaserver'
+    apt: 
+      default_release: jessie
+      update_cache: true
+      name: plexmediaserver
