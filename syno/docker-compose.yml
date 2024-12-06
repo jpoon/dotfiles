@@ -1,0 +1,115 @@
+version: "3.2"
+services:
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: always
+    network_mode: service:vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/radarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+    depends_on:
+      - vpn
+
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:latest
+    restart: always
+    network_mode: service:vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/sonarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+    depends_on:
+      - vpn
+
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr:latest
+    restart: always
+    network_mode: service:vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/prowlarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+    depends_on:
+      - vpn
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent:latest
+    restart: always
+    network_mode: service:vpn
+    environment:
+      - WEBUI_PORTS=8090/tcp,8090/udp
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/qbittorrent:/config
+      - ${DOCKERSTORAGEDIR}:/data
+    depends_on:
+      - vpn
+
+  vpn:
+    container_name: gluetun
+    image: qmcgaw/gluetun
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp   # HTTP proxy
+      - 8388:8388/tcp   # Shadowsocks
+      - 8388:8388/udp   # Shadowsocks
+      - 7878:7878       # radarr
+      - 8989:8989       # sonarr
+      - 9696:9696       # prowlarr
+      - 8090:8090       # qbittorrent
+      - 6881:6881       # qbittorrent
+      - 6881:6881/udp   # qbittorrent
+    environment:
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=wireguard
+      - VPN_ENDPOINT_IP=144.24.26.20
+      - VPN_ENDPOINT_PORT=51820
+      - WIREGUARD_PUBLIC_KEY=2KZMHmaTxGCIeBStmWrbtKNM1FuU2cguvlHesHA20RQ=
+      - WIREGUARD_PRIVATE_KEY=0EgRmW3h5Dry92864VfNp7BLGEpNTibLeDTG+Wdctnw=
+      - WIREGUARD_PRESHARED_KEY=KmielmwfV5O7TRA5o15W/5L5wmMWM+FU0qeCvM8/9Xg=
+      - WIREGUARD_ADDRESSES=10.49.0.4/32
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/gluetun:/config
+
+networks:
+  default:
+    name: servarr
+    driver: bridge
+    ipam:
+      config:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
